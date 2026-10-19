@@ -1,0 +1,1 @@
+This folder contains the Jupyter notebook and datasets for our Student Health Risk project. It includes data preprocessing, exploratory data analysis, statistical testing, and machine learning models used to predict student health-risk categories (Low, Medium, and High) based on lifestyle habits.
