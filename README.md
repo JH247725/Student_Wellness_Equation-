@@ -113,3 +113,9 @@ The results show predictive associations, not causal relationships. The test dat
 ## Reproducibility
 
 The notebook contains the project's analysis, model development, and evaluation workflow. Before submission, ensure that all notebook cells have been executed successfully and that the saved notebook includes its outputs, plots, and evaluation results.
+
+## Citations for research papers
+
+Zhang, L., Zhao, S., Yang, Z. et al. An artificial intelligence tool to assess the risk of severe mental distress among college students in terms of demographics, eating habits, lifestyles, and sport habits: an externally validated study using machine learning. BMC Psychiatry 24, 581 (2024). https://doi.org/10.1186/s12888-024-06017-2
+
+Laska, M.N., Pasch, K.E., Lust, K. et al. Latent Class Analysis of Lifestyle Characteristics and Health Risk Behaviors among College Youth. Prev Sci 10, 376–386 (2009). https://doi.org/10.1007/s11121-009-0140-2
