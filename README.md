@@ -1,122 +1,115 @@
-[README.md](https://github.com/user-attachments/files/33683625/README.md)
 # The Student Wellness Equation
 
-An interactive Streamlit dashboard for the Student Health Risk tabular machine-learning project.
+## Project Overview
 
-## Research question
+This project explores whether students' lifestyle habits can be used to predict their health-risk categories using machine learning. We focus on six lifestyle factors: study hours, sleep hours, screen time, stress level, diet quality, and exercise hours.
 
-Can lifestyle habits—study hours, sleep hours, screen time, stress level, diet quality, and exercise hours—help predict a student's `Health_Risk` category (Low, Medium, or High)?
+Our goal is to compare machine learning models and identify which lifestyle factors are most useful for predicting health risk.
 
-## Dashboard features
+## Research Question
 
-- Overview of the labeled dataset and health-risk distribution
-- Interactive lifestyle comparisons with Plotly
-- Model performance metrics from the executed notebook's stratified 80/20 validation split
-- Permutation feature importance
-- A prediction demo powered by a saved Random Forest pipeline
-
-> **Important:** This is an educational project, not a medical tool. Predictions are not diagnoses. Predictive importance and associations do not establish causation.
-
-## Repository structure
-
-```text
-.
-├── app.py
-├── requirements.txt
-├── README.md
-└── tabular/
-    ├── data/
-    │   ├── train.csv
-    │   └── test.csv
-    ├── models/
-    │   └── health_risk_model.joblib
-    ├── notebooks/
-    │   └── health_risk_project.ipynb
-    ├── outputs/
-    │   ├── feature_importance.csv
-    │   ├── model_metrics.json
-    │   └── test_predictions.csv
-    └── src/
-        └── train_model.py
-```
+Can lifestyle habits predict a student's health-risk level (Low, Medium, or High)?
 
 ## Dataset
 
-The supplied training data contains 4,000 labeled records; the supplied test data contains 1,000 records without target labels. The six model predictors are:
+The project uses the Student Health Risk dataset from the Kaggle Playground Series, Season 6, Episode 7.
 
-- Numeric: `Study_Hours`, `Sleep_Hours`, `Screen_Time`, `Exercise_Hours`
-- Categorical: `Stress_Level`, `Diet_Quality`
+- **Training dataset:** 4,000 labeled records
+- **Test dataset:** 1,000 records without target labels
+- **Target variable:** `Health_Risk`
+- **Target categories:** Low, Medium, and High
 
-The `id` column is excluded from model features.
+### Features
 
-Training target distribution:
-- Low: 65.25%
-- Medium: 26.60%
-- High: 8.15%
+**Numerical features**
+- `Study_Hours`
+- `Sleep_Hours`
+- `Screen_Time`
+- `Exercise_Hours`
 
-## Model and validation
+**Categorical features**
+- `Stress_Level`
+- `Diet_Quality`
 
-The notebook's selected model is a tuned Random Forest with a preprocessing pipeline (StandardScaler for numeric columns and OneHotEncoder for categorical columns). The tuned settings recorded in the notebook are:
+The `id` column is excluded from the model features.
 
-- `n_estimators=100`
-- `max_depth=10`
-- `min_samples_leaf=4`
-- `min_samples_split=2`
-- `max_features="sqrt"`
-- `class_weight="balanced"`
-- `random_state=42`
+## Methods
 
-Recorded validation metrics from the notebook's stratified 80/20 split (800 validation records):
-- Accuracy: 76.00%
-- Balanced accuracy: 74.48%
-- Macro F1: 0.7034
-- High-risk recall: 81.54%
-- High-risk precision: 58.24%
+The project notebook includes:
 
-The validation metrics shown by the dashboard are the results recorded in the notebook. The saved prediction pipeline is retrained on all 4,000 labeled records for the interactive demo and should not be used to re-estimate those holdout metrics.
+- Data cleaning and exploratory data analysis
+- Analysis of health-risk class distribution
+- Chi-square tests for categorical features
+- One-way ANOVA for numerical features
+- Stratified training and validation split
+- Feature preprocessing using `StandardScaler` and `OneHotEncoder`
+- Comparison of baseline and advanced machine learning models
+- Stratified cross-validation and hyperparameter tuning
+- Evaluation using accuracy, balanced accuracy, macro F1-score, and high-risk recall
+- Permutation feature importance
 
-## Run locally
+## Model Results
 
-Python 3.11 is recommended.
+The tuned Random Forest was selected as the final model in our notebook.
 
-1. Clone this repository.
-2. Create and activate a virtual environment.
-3. Install dependencies.
-4. Run Streamlit.
+Recorded validation results:
 
-```bash
-python -m venv .venv
-# Windows PowerShell:
-.venv\Scripts\Activate.ps1
-# macOS/Linux:
-source .venv/bin/activate
+| Metric | Result |
+|---|---:|
+| Accuracy | 76.00% |
+| Balanced accuracy | 74.48% |
+| Macro F1-score | 0.7034 |
+| High-risk recall | 81.54% |
+| High-risk precision | 58.24% |
 
-pip install -r requirements.txt
-streamlit run app.py
+Stress level and sleep hours were identified as the most influential predictors in the notebook's permutation feature-importance analysis.
+
+The dataset is imbalanced, with 65.25% of records classified as Low risk, 26.60% as Medium risk, and 8.15% as High risk. For this reason, we considered metrics beyond accuracy when comparing models.
+
+## Repository Structure
+
+```text
+.
+├── README.md
+├── requirements.txt
+└── tabular/
+    ├── README.md
+    ├── health_risk_project.ipynb
+    ├── train.csv
+    └── test.csv
 ```
 
-## Rebuild the saved model
+## Requirements
 
-From the repository root:
+The project uses Python and common data science libraries, including:
 
-```bash
-python tabular/src/train_model.py
-```
+- pandas
+- NumPy
+- scikit-learn
+- Matplotlib
+- Seaborn
+- Jupyter Notebook
 
-This fits the specified Random Forest pipeline on the labeled training data and writes the model to `tabular/models/health_risk_model.joblib`. It does not reproduce the notebook's hyperparameter search; the tuned parameters are specified from the notebook's recorded best result.
+See `requirements.txt` for the listed dependencies.
 
-## Deploy on Streamlit Community Cloud
+## How to Run
 
-1. Push this repository to GitHub.
-2. Open https://share.streamlit.io/ and sign in with GitHub.
-3. Choose this repository, branch `main`, and main file path `app.py`.
-4. Deploy and wait for the build to complete.
-5. Open the app URL and test each tab.
+1. Clone or download this repository.
+2. Install the required packages:
 
-## Reproducibility checklist
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-- Execute the notebook from top to bottom and save outputs before submitting.
-- Confirm `train.csv` and `test.csv` paths work from a fresh clone.
-- Keep `requirements.txt` up to date.
-- Verify that the GitHub repository does not contain secrets or data you are not permitted to share.
-- Do not claim that test predictions are validated: the test CSV has no ground-truth `Health_Risk` labels.
+3. Open the notebook in Jupyter Notebook or JupyterLab.
+4. Run the notebook cells in order to reproduce the analysis and model evaluation.
+
+## Limitations
+
+The dataset contains fewer High-risk examples than Low-risk examples, which can affect model performance across categories. The model uses only six lifestyle features, and its predictions should not be treated as medical diagnoses.
+
+The results show predictive associations, not causal relationships. The test dataset does not contain `Health_Risk` labels, so its predictions cannot be evaluated against known outcomes.
+
+## Reproducibility
+
+The notebook contains the project's analysis, model development, and evaluation workflow. Before submission, ensure that all notebook cells have been executed successfully and that the saved notebook includes its outputs, plots, and evaluation results.
